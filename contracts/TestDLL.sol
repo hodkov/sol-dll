@@ -39,7 +39,7 @@ contract TestDLL {
 		dll.remove(_curr);
 	}
 
-	function replace(uint _curr, uint _next) public {
-		dll.replace(_curr, _next);
+	function replace(uint _curr, uint _prev) public {
+		dll.replace(_curr, _prev);
 	}
 }
