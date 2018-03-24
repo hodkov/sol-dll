@@ -10,7 +10,7 @@ contract TestDLL {
 	function isEmpty() public view returns (bool) {
 		return dll.isEmpty();
 	}
-	
+
 	function contains(uint _curr) public view returns (bool) {
 		return dll.contains(_curr);
 	}
@@ -18,15 +18,15 @@ contract TestDLL {
 	function getNext(uint _curr) public view returns (uint) {
 		return dll.getNext(_curr);
 	}
-	
+
 	function getPrev(uint _curr) public view returns (uint) {
 		return dll.getPrev(_curr);
 	}
-	
+
 	function getStart() public view returns (uint) {
 		return dll.getStart();
 	}
-	
+
 	function getEnd() public view returns (uint) {
 		return dll.getEnd();
 	}
@@ -37,5 +37,9 @@ contract TestDLL {
 
 	function remove(uint _curr) public {
 		dll.remove(_curr);
+	}
+
+	function replace(uint _curr, uint _next) public {
+		dll.replace(_curr, _next);
 	}
 }

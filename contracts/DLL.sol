@@ -20,7 +20,7 @@ library DLL {
   function contains(Data storage self, uint _curr) public view returns (bool) {
     if (isEmpty(self) || _curr == NULL_NODE_ID) {
       return false;
-    } 
+    }
 
     bool isSingleNode = (getStart(self) == _curr) && (getEnd(self) == _curr);
     bool isNullNode = (getNext(self, _curr) == NULL_NODE_ID) && (getPrev(self, _curr) == NULL_NODE_ID);
@@ -44,7 +44,7 @@ library DLL {
   }
 
   /**
-  @dev Inserts a new node between _prev and _next. When inserting a node already existing in 
+  @dev Inserts a new node between _prev and _next. When inserting a node already existing in
   the list it will be automatically removed from the old position.
   @param _prev the node which _new will be inserted after
   @param _curr the id of the new node being inserted
@@ -53,10 +53,10 @@ library DLL {
   function insert(Data storage self, uint _prev, uint _curr, uint _next) public {
     require(_curr != NULL_NODE_ID);
 
-    remove(self, _curr);
-
     require(_prev == NULL_NODE_ID || contains(self, _prev));
     require(_next == NULL_NODE_ID || contains(self, _next));
+
+    remove(self, _curr);
 
     require(getNext(self, _prev) == _next);
     require(getPrev(self, _next) == _prev);
@@ -66,6 +66,25 @@ library DLL {
 
     self.dll[_prev].next = _curr;
     self.dll[_next].prev = _curr;
+  }
+
+  function replace(Data storage self, uint _curr, uint _prev) public {
+    require(contains(self, _curr));
+    if (self.dll[_curr].prev == _prev) {
+      return;
+    }
+
+    require(_prev == NULL_NODE_ID || contains(self, _prev));
+
+    remove(self, _curr);
+
+    uint next = self.dll[_prev].next;
+
+    self.dll[_curr].prev = _prev;
+    self.dll[_curr].next = next;
+
+    self.dll[_prev].next = _curr;
+    self.dll[next].prev = _curr;
   }
 
   function remove(Data storage self, uint _curr) public {
